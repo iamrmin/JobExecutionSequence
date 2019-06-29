@@ -1,4 +1,8 @@
-﻿namespace JobExecutionSequence
+﻿using System.IO;
+using System.Linq;
+using System.Text;
+
+namespace JobExecutionSequence
 {
     using System;
     using System.Collections.Generic;
@@ -14,12 +18,56 @@
         private Dictionary<string, string> jobs;
 
         /// <summary>
+        /// The final job sequence after dependency evaluation
+        /// </summary>
+        private StringBuilder jobSequence;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="rawString">The raw input</param>
         public JobDependencyService(string rawString)
         {
             this.RawDataParser(rawString);
+        }
+
+        public string EvaluateJobSequence()
+        {
+            this.jobSequence = new StringBuilder();
+
+            while (this.jobs.Count > 0)
+            {
+                var nextJob = this.jobs.First();
+                jobSequence.Append(this.CheckDependency(nextJob.Key, nextJob.Value));
+            }
+
+            return jobSequence.ToString();
+        }
+
+        private string CheckDependency(string jobId, string dependency, List<string> circularDependency = null)
+        {
+            string result;
+
+            if (dependency == null || this.jobSequence.ToString().Contains(dependency))
+                result = jobId;
+            else
+            {
+                if (circularDependency == null)
+                    circularDependency = new List<string>();
+
+                if (circularDependency.Contains(jobId))
+                    throw new InvalidDataException("Circular dependency found");
+
+                if (!this.jobs.ContainsKey(dependency))
+                    throw new InvalidDataException("Dependent job doesn't found");
+
+                circularDependency.Add(jobId);
+
+                result = this.CheckDependency(dependency, this.jobs[dependency]) + jobId;
+            }
+
+            this.jobs.Remove(jobId);
+            return result;
         }
 
         private void RawDataParser(string rawString)
@@ -31,7 +79,13 @@
             foreach (var job in rawJobs)
             {
                 var splitData = job.Split("=>", StringSplitOptions.RemoveEmptyEntries);
-                this.jobs.Add(splitData[0], splitData.Length > 1 ? splitData[1] : null);
+                var jobId = splitData[0].Trim();
+                var dependency = splitData.Length > 1 ? splitData[1].Trim() : null;
+
+                if (this.jobs.ContainsKey(jobId))
+                    throw new InvalidDataException("Duplicate job found");
+
+                this.jobs.Add(jobId, dependency);
             }
         }
     }

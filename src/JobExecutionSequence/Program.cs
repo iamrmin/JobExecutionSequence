@@ -12,6 +12,9 @@
 
             var rawFileText = File.ReadAllText(args[0]);
             var jobDependencyService = new JobDependencyService(rawFileText);
+            var output = jobDependencyService.EvaluateJobSequence();
+
+            Console.WriteLine(output);
         }
     }
 }
