@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "JobExecutionSequence": {
+      "commandName": "Project",
+      "commandLineArgs": "input.txt"
+    }
+  }
+}
