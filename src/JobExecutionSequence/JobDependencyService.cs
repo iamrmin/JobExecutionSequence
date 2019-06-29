@@ -38,15 +38,8 @@ namespace JobExecutionSequence
             while (this.jobs.Count > 0)
             {
                 var nextJob = this.jobs.First();
-                try
-                {
-                    var evaluatedResult = this.CheckDependency(nextJob.Key, nextJob.Value);
-                    jobSequence.Append(evaluatedResult);
-                }
-                catch (Exception ex)
-                {
-                    return $"{ex.GetType().Name } - {ex.Message}";
-                }
+                var evaluatedResult = this.CheckDependency(nextJob.Key, nextJob.Value);
+                jobSequence.Append(evaluatedResult);
             }
 
             return jobSequence.ToString();
@@ -59,7 +52,7 @@ namespace JobExecutionSequence
             if (dependency == null || this.jobSequence.ToString().Contains(dependency))
                 result = jobId;
             else if (jobId == dependency)
-                throw new InvalidDataException("Circular dependency found");
+                throw new InvalidDataException("Jobs can’t depend on themselves");
             else
             {
                 if (circularDependency == null)

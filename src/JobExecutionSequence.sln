@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobExecutionSequence", "JobExecutionSequence\JobExecutionSequence.csproj", "{2B5E5E75-3C98-4CA2-A423-5964A1547A76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobExecutionSequence.Tests", "..\test\JobExecutionSequence.Tests\JobExecutionSequence.Tests.csproj", "{56E533C2-08A8-4C4B-89D7-54CC30BB00D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2B5E5E75-3C98-4CA2-A423-5964A1547A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B5E5E75-3C98-4CA2-A423-5964A1547A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B5E5E75-3C98-4CA2-A423-5964A1547A76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56E533C2-08A8-4C4B-89D7-54CC30BB00D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56E533C2-08A8-4C4B-89D7-54CC30BB00D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56E533C2-08A8-4C4B-89D7-54CC30BB00D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56E533C2-08A8-4C4B-89D7-54CC30BB00D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
